@@ -2,37 +2,27 @@
 
 <p><code>thorsenbuilds@github ~ $ ./maintainer.sh</code></p>
 
-<table width="100%" border="1">
-<tr>
-<td width="58%" valign="top">
-<p><code>VISUAL.MAP // HOODED.SCAN</code></p>
-<pre><code>                 .-^^^^^^^^^^^-.
-             .-''  .-"""""-.  ''-.
-           .'     /  .-""-.       '.
-          /      /  /                       /      |  | .----. |  |              ;       |  ||  o  o||  |       ;
-        |       |  || .-..-||  |       |
-        |       |  |/ ::::: |  |       |
-        |       |  / :::::::   |       |
-        |       | |  :::::::  | |       |
-        |       | |  :::::::  | |       |
-        |        |  :::::::  |/        |
-        |         | .::::::::.|          |
-        ;       .-'  '::::::'  '-.       ;
-             .' .-._  '--'  _.-. '.    /
-          '. /  /    '------'       .'
-            /__/                  __           /____                /____          /                    /               /________            /________</code></pre>
-</td>
-<td width="42%" valign="middle">
-<p><code>SYSTEM.INFO</code></p>
-<p><code>Subject</code> · Thorsen</p>
-<p><code>Handle</code> · @thorsenbuilds</p>
-<p><code>Role</code> · Python builder</p>
-<p><code>Focus</code> · Applied AI</p>
-<p><code>Status</code> · Building | Learning | Shipping</p>
-<p><code>Languages</code> · Python</p>
-</td>
-</tr>
-</table>
+<div align="center">
+<pre><code>VISUAL.MAP // HOODED.SCAN
+
+............./^^^^^^^^^\.............
+............/ /.......\ \............
+.........../ /.........\ \...........
+..........| |.. .-----. | |..........
+..........| |. / o...o \| |..........
+..........| | | .-...-. | |..........
+..........| | |/ ::::: \| |..........
+..........| | / ::::::: \ |..........
+..........| |/:::::::::::\|..........
+..........| | ::::::::::: |..........
+...........\| .:::::::::. |/.........
+............| / ':::::::' \|..........
+......... .-' /..'-----'..\ '-. ......
+........ /___/.............\___\.....
+......./____/...............\____\....
+......|_____|...............|_____|...</code></pre>
+
+<code>SYSTEM.INFO</code><br>Thorsen · @thorsenbuilds<br>Python · Applied AI<br>Building / Learning / Shipping
 </div>
 
 <h2>Why I build in public</h2>
