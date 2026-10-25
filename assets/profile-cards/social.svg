@@ -1,29 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="235" viewBox="0 0 900 235" role="img" aria-label="CONNECT.SH // OPEN CHANNEL">
-<defs>
-  <linearGradient id="edge" x1="0" x2="1"><stop stop-color="#42f58d" stop-opacity=".2"/><stop offset=".5" stop-color="#b5ff70" stop-opacity=".9"/><stop offset="1" stop-color="#42f58d" stop-opacity=".2"/></linearGradient>
-  <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#42f58d" stroke-opacity=".045" stroke-width="1"/></pattern>
-  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <style>
-    text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-    .title{fill:#d9f8e5;font-size:19px;font-weight:700;letter-spacing:1.5px}
-    .label{fill:#8aa995;font-size:12px;letter-spacing:1px}
-    .value{fill:#d9f8e5;font-size:16px;font-weight:600}
-    .accent{fill:#42f58d}
-    .enter{opacity:0;animation:enter .75s cubic-bezier(.2,.8,.2,1) forwards}
-    .pulse{animation:pulse 2.4s ease-in-out infinite}
-    .scan{animation:scan 5s linear infinite}
-    @keyframes enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
-    @keyframes scan{from{transform:translateY(0)}to{transform:translateY(235px)}}
-    @media(prefers-reduced-motion:reduce){.enter,.pulse,.scan{animation:none;opacity:1}}
-  </style>
-</defs>
-<rect x="1" y="1" width="898" height="233" rx="15" fill="#07110d" stroke="#1c4a30" stroke-width="2"/>
-<rect x="2" y="2" width="896" height="231" rx="14" fill="url(#grid)"/>
-<rect x="2" y="2" width="896" height="3" rx="2" fill="url(#edge)"/>
-<circle cx="28" cy="27" r="5" fill="#ff6b6b"/><circle cx="47" cy="27" r="5" fill="#ffd166"/><circle cx="66" cy="27" r="5" fill="#42f58d"/>
-<text x="88" y="32" class="label">THORSEN // PUBLIC PROFILE</text><text x="870" y="32" text-anchor="end" class="label pulse">● ONLINE</text>
-<text x="30" y="68" class="title">CONNECT.SH // OPEN CHANNEL</text>
-<rect class="scan" x="4" y="222" width="892" height="1" fill="#42f58d" opacity=".13"/>
-<text x="48" y="111" class="value">If the work is useful, open an issue, improve the docs, or start a conversation.</text><a href="https://github.com/thorsenbuilds"><rect x="48" y="137" width="214" height="43" rx="8" fill="#10281a" stroke="#42f58d"/><text x="68" y="164" class="value accent">github.com/thorsenbuilds</text></a><text x="48" y="205" class="label">BUILDING IN PUBLIC · PYTHON · APPLIED AI · MUSIC DISCOVERY</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="126" viewBox="0 0 860 126" role="img" aria-label="Animated GitHub contact pill"><defs>
+<linearGradient id="frame" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#60ff48"/><stop offset=".48" stop-color="#185d2b"/><stop offset="1" stop-color="#142c37"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#09130c"/><stop offset=".55" stop-color="#060b09"/><stop offset="1" stop-color="#080c13"/></linearGradient>
+<radialGradient id="haloA"><stop stop-color="#61ff36" stop-opacity=".42"/><stop offset="1" stop-color="#49ff24" stop-opacity="0"/></radialGradient>
+<radialGradient id="haloB"><stop stop-color="#45c9a1" stop-opacity=".26"/><stop offset="1" stop-color="#45c9a1" stop-opacity="0"/></radialGradient>
+<linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7dff42" stop-opacity="0"/><stop offset=".48" stop-color="#a6ff6a" stop-opacity=".64"/><stop offset="1" stop-color="#7dff42" stop-opacity="0"/></linearGradient>
+<linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7bff52"/><stop offset=".55" stop-color="#3bc882"/><stop offset="1" stop-color="#6468ff"/></linearGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="24"/></filter><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace} .label{fill:#78a77d;font-size:12px;letter-spacing:1.1px} .small{fill:#78a77d;font-size:11px} .value{fill:#d8ffe0;font-size:16px;font-weight:600} .accent{fill:#54f34b} .bright{fill:#b7ff63}
+.glow-drift{animation:drift 8s ease-in-out infinite alternate} .scan{animation:scan 5.0s linear infinite} .pulse{animation:pulse 2.4s ease-in-out infinite} .rise{opacity:0;animation:rise .7s ease-out forwards} .dash{stroke-dasharray:650;stroke-dashoffset:650;animation:draw 2.1s ease-out forwards} .ring-pulse{transform-box:fill-box;transform-origin:center;animation:ring 4s ease-in-out infinite}
+@keyframes drift{from{transform:translate(-24px,-4px);opacity:.72}to{transform:translate(22px,8px);opacity:1}} @keyframes scan{from{transform:translateY(-20px)}to{transform:translateY(146px)}} @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}} @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}} @keyframes draw{to{stroke-dashoffset:0}} @keyframes ring{0%,100%{transform:scale(.96);opacity:.82}50%{transform:scale(1.04);opacity:1}}
+@media(prefers-reduced-motion:reduce){.glow-drift,.scan,.pulse,.rise,.dash,.ring-pulse{animation:none!important;opacity:1;transform:none;stroke-dashoffset:0}}</style></defs>
+<rect width="860" height="126" rx="20" fill="#050907"/><ellipse class="glow-drift" cx="241" cy="0" rx="258" ry="113" fill="url(#haloA)" filter="url(#blur)"/><ellipse class="glow-drift" cx="671" cy="98" rx="224" ry="81" fill="url(#haloB)" filter="url(#blur)"/>
+<rect x="1" y="1" width="858" height="124" rx="19" fill="url(#glass)" stroke="url(#frame)" stroke-opacity=".88" stroke-width="1.5"/><rect x="6" y="6" width="848" height="114" rx="15" fill="#080d0b" fill-opacity=".68" stroke="#285432" stroke-opacity=".82" stroke-width="1.25"/><rect x="34" y="25" width="792" height="76" rx="38" fill="#07100a" fill-opacity=".7" stroke="#244b2b"/><rect class="dash" x="35" y="26" width="790" height="74" rx="37" fill="none" stroke="url(#frame)" stroke-width="1.6"/><rect x="324" y="40" width="212" height="46" rx="23" fill="#08120b" stroke="url(#frame)" stroke-width="1.5" filter="url(#glow)"/><circle cx="350" cy="63" r="13" fill="#e4f0e7"/><g transform="translate(338 51) scale(1)" fill="#17231a"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.3 9.4 7.87 10.93.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.3 1.2-3.11-.12-.3-.52-1.48.11-3.08 0 0 .98-.31 3.2 1.19.93-.26 1.92-.4 2.9-.4.98 0 1.97.14 2.9.4 2.22-1.5 3.2-1.19 3.2-1.19.64 1.6.24 2.78.12 3.08.75.81 1.2 1.85 1.2 3.11 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></g><text x="373" y="59" class="bright" font-size="12" font-weight="700">GitHub</text><text x="373" y="75" class="value" font-size="13">@thorsenbuilds</text><circle cx="796" cy="63" r="4" fill="#70ff50" class="pulse"/></svg>
