@@ -5,7 +5,10 @@ from __future__ import annotations
 import html
 import json
 import os
+import re
 import urllib.request
+from html.parser import HTMLParser
+from urllib.parse import quote
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -26,29 +29,19 @@ def esc(value: object) -> str:
 
 
 def github_data() -> dict:
-    now = datetime.now(timezone.utc)
     query = """
-    query($login:String!, $from:DateTime!, $to:DateTime!) {
+    query($login:String!) {
       user(login:$login) {
         name login bio location websiteUrl followers { totalCount }
         repositories(first:100, ownerAffiliations:OWNER, privacy:PUBLIC,
           orderBy:{field:PUSHED_AT,direction:DESC}) {
           totalCount nodes { name url description stargazerCount forkCount pushedAt
-            isFork primaryLanguage { name color } }
-        }
-        contributionsCollection(from:$from,to:$to) {
-          contributionCalendar { totalContributions weeks {
-            contributionDays { date contributionCount weekday }
-          } }
+            isFork isPrivate primaryLanguage { name color } }
         }
       }
     }
     """
-    body = json.dumps({"query": query, "variables": {
-        "login": LOGIN,
-        "from": (now - timedelta(days=365)).isoformat().replace("+00:00", "Z"),
-        "to": now.isoformat().replace("+00:00", "Z"),
-    }}).encode()
+    body = json.dumps({"query": query, "variables": {"login": LOGIN}}).encode()
     request = urllib.request.Request(
         "https://api.github.com/graphql", data=body,
         headers={"Authorization": f"Bearer {TOKEN}",
@@ -67,6 +60,67 @@ def github_data() -> dict:
     user["repositories"]["nodes"] = repos
     return user
 
+
+class ContributionCalendarParser(HTMLParser):
+    """Read only GitHub's publicly rendered aggregate contribution calendar."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.days: list[dict] = []
+        self.heading: list[str] = []
+        self.in_heading = False
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = dict(attrs)
+        if tag == "h2" and values.get("id") == "js-contribution-activity-description":
+            self.in_heading = True
+        if tag == "td" and values.get("data-date"):
+            self.days.append({
+                "date": values["data-date"],
+                "level": int(values.get("data-level") or 0),
+            })
+
+    def handle_data(self, data: str) -> None:
+        if self.in_heading:
+            self.heading.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "h2" and self.in_heading:
+            self.in_heading = False
+
+
+def public_calendar(login: str) -> dict:
+    """Use only the aggregate heatmap GitHub already shows on the public profile."""
+    today = datetime.now(timezone.utc).date()
+    url = (f"https://github.com/users/{quote(login, safe='')}/contributions"
+           f"?to={today.isoformat()}")
+    request = urllib.request.Request(url, headers={
+        "User-Agent": "thorsen-profile-card-renderer",
+        "Accept": "text/html",
+        "Accept-Language": "en-US,en;q=0.9",
+    })
+    with urllib.request.urlopen(request, timeout=30) as response:
+        page = response.read().decode("utf-8", errors="replace")
+    parser = ContributionCalendarParser()
+    parser.feed(page)
+    match = re.search(r"([\d,]+)\s+contributions\s+in\s+(\d{4})",
+                      " ".join(parser.heading), re.IGNORECASE)
+    if not match or not parser.days:
+        raise RuntimeError("Could not read the public GitHub contribution calendar")
+    total, year = int(match.group(1).replace(",", "")), int(match.group(2))
+    grouped: dict[str, list[dict]] = {}
+    for item in parser.days:
+        day = datetime.strptime(item["date"], "%Y-%m-%d").date()
+        week_start = day - timedelta(days=day.weekday())
+        weekday = day.weekday()
+        grouped.setdefault(week_start.isoformat(), []).append({
+            "date": item["date"], "weekday": weekday,
+            # GitHub exposes intensity levels, not exact counts, on this public HTML.
+            "contributionCount": item["level"], "level": item["level"],
+        })
+    weeks = [{"contributionDays": sorted(days, key=lambda d: d["weekday"])}
+             for _, days in sorted(grouped.items())]
+    return {"totalContributions": total, "year": year, "weeks": weeks}
 
 def card(title: str, body: str, height: int, subtitle: str = "THORSEN // PUBLIC PROFILE") -> str:
     # Each image is self-contained: styles, fonts and animation are embedded; no scripts or remote assets.
@@ -152,10 +206,10 @@ def render_projects(repos: list[dict]) -> str:
     return card("PROJECTS.SH // PUBLIC REPOSITORIES", body, 155 + max(1, len(items)) * 67)
 
 
-def render_stats(u: dict, repos: list[dict], total: int) -> str:
+def render_stats(u: dict, repos: list[dict], total: int, year: int) -> str:
     stars = sum(r.get("stargazerCount", 0) for r in repos)
     forks = sum(r.get("forkCount", 0) for r in repos)
-    metrics = [("CONTRIBUTIONS · 12M", total), ("PUBLIC REPOSITORIES", len(repos)), ("STARS EARNED", stars), ("FORKS", forks)]
+    metrics = [(f"CONTRIBUTIONS · {year}", total), ("PUBLIC REPOSITORIES", len(repos)), ("STARS EARNED", stars), ("FORKS", forks)]
     body = '<text x="48" y="101" class="label">OPEN-SOURCE SIGNAL // UPDATED FROM GITHUB DATA</text>'
     for i, (label, value) in enumerate(metrics):
         x = 45 + (i % 2) * 420
@@ -166,19 +220,16 @@ def render_stats(u: dict, repos: list[dict], total: int) -> str:
 
 def render_heatmap(calendar: dict) -> str:
     weeks = calendar.get("weeks", [])[-53:]
-    all_days = [day for week in weeks for day in week["contributionDays"]]
-    peak = max([d.get("contributionCount", 0) for d in all_days] or [1])
-    body = f'<text x="48" y="101" class="label">{calendar.get("totalContributions",0):,} CONTRIBUTIONS · LAST 12 MONTHS · PUBLIC PROFILE TOTAL</text>'
-    colors = ["#102017", "#164b2d", "#1e8a48", GREEN]
+    body = f'<text x="48" y="101" class="label">{calendar.get("totalContributions",0):,} CONTRIBUTIONS · {calendar.get("year")} · PUBLIC PROFILE TOTAL</text>'
+    colors = ["#102017", "#124b2d", "#168a46", "#22c55e", GREEN]
     for wi, week in enumerate(weeks):
         for day in week["contributionDays"]:
             weekday = int(day.get("weekday", 0))
-            count = int(day.get("contributionCount", 0))
-            level = 0 if count == 0 else min(3, 1 + (count * 3 // (peak + 1)))
+            level = max(0, min(4, int(day.get("level", 0))))
             x, y = 48 + wi * 15, 118 + weekday * 17
             delay = min(1800, wi * 20 + weekday * 15)
-            body += f'<rect class="enter" style="animation-delay:{delay}ms" x="{x}" y="{y}" width="10" height="11" rx="2" fill="{colors[level]}" opacity=".92"><title>{esc(day.get("date"))}: {count} contributions</title></rect>'
-    body += f'<text x="48" y="258" class="label">LESS</text><rect x="91" y="247" width="11" height="11" rx="2" fill="#102017"/><rect x="108" y="247" width="11" height="11" rx="2" fill="#164b2d"/><rect x="125" y="247" width="11" height="11" rx="2" fill="#1e8a48"/><rect x="142" y="247" width="11" height="11" rx="2" fill="{GREEN}"/><text x="165" y="258" class="label">MORE</text>'
+            body += f'<rect class="enter" style="animation-delay:{delay}ms" x="{x}" y="{y}" width="10" height="11" rx="2" fill="{colors[level]}" opacity=".92"><title>{esc(day.get("date"))}: GitHub activity level {level}</title></rect>'
+    body += f'<text x="48" y="258" class="label">LESS</text><rect x="91" y="247" width="11" height="11" rx="2" fill="#102017"/><rect x="108" y="247" width="11" height="11" rx="2" fill="#164b2d"/><rect x="125" y="247" width="11" height="11" rx="2" fill="#1e8a48"/><rect x="142" y="247" width="11" height="11" rx="2" fill="#22c55e"/><rect x="159" y="247" width="11" height="11" rx="2" fill="{GREEN}"/><text x="182" y="258" class="label">MORE</text>'
     return card("VISUAL.MAP // CONTRIBUTION.SIGNAL", body, 285)
 
 
@@ -190,13 +241,13 @@ def render_social() -> str:
 def main() -> None:
     user = github_data()
     repos = user["repositories"]["nodes"]
-    calendar = user["contributionsCollection"]["contributionCalendar"]
+    calendar = public_calendar(user["login"])
     OUT.mkdir(parents=True, exist_ok=True)
     generated = {
         "system-scan.svg": render_scan(user, repos, user["repositories"]["totalCount"]),
         "toolbox.svg": render_toolbox(repos),
         "projects.svg": render_projects(repos),
-        "stats.svg": render_stats(user, repos, calendar["totalContributions"]),
+        "stats.svg": render_stats(user, repos, calendar["totalContributions"], calendar["year"]),
         "heatmap.svg": render_heatmap(calendar),
         "social.svg": render_social(),
     }
