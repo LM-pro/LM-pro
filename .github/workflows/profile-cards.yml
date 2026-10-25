@@ -34,13 +34,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USERNAME: thorsenbuilds
           PROFILE_CARDS_DIR: assets/profile-cards
+          PROFILE_CARDS_CACHE_BUST: ${{ github.run_id }}
         run: python3 generate_profile_cards.py
-      - name: Commit changed cards
+      - name: Commit changed cards and README
         run: |
-          if [[ -n "$(git status --porcelain -- assets/profile-cards)" ]]; then
+          if [[ -n "$(git status --porcelain -- assets/profile-cards README.md)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add assets/profile-cards/
+            git add assets/profile-cards/ README.md
             git commit -m "chore(profile): refresh animated cards [skip ci]"
             git push
           fi
