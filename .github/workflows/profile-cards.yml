@@ -1,0 +1,41 @@
+name: Refresh profile cards
+
+on:
+  push:
+    branches:
+      - main
+      - codex/profile-cards-draft
+    paths:
+      - README.md
+      - .github/workflows/profile-cards.yml
+  schedule:
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Branch to refresh
+        required: false
+        default: codex/profile-cards-draft
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the selected profile branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref || github.ref }}
+
+      - name: Generate profile cards
+        uses: seijikohara/profile-cards-action@v1.14.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          username: thorsenbuilds
+          cards: overview,contributions,languages,portfolio,repositories,rhythm
+          output-dir: assets/profile-cards
+          themes: light,dark
+          commit: true
+          commit-message: 'chore(profile): refresh generated cards [skip ci]'
