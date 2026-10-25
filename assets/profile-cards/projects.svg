@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="356" viewBox="0 0 900 356" role="img" aria-label="PROJECTS.SH // PUBLIC REPOSITORIES">
+<defs>
+  <linearGradient id="edge" x1="0" x2="1"><stop stop-color="#42f58d" stop-opacity=".2"/><stop offset=".5" stop-color="#b5ff70" stop-opacity=".9"/><stop offset="1" stop-color="#42f58d" stop-opacity=".2"/></linearGradient>
+  <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#42f58d" stroke-opacity=".045" stroke-width="1"/></pattern>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <style>
+    text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    .title{fill:#d9f8e5;font-size:19px;font-weight:700;letter-spacing:1.5px}
+    .label{fill:#8aa995;font-size:12px;letter-spacing:1px}
+    .value{fill:#d9f8e5;font-size:16px;font-weight:600}
+    .accent{fill:#42f58d}
+    .enter{opacity:0;animation:enter .75s cubic-bezier(.2,.8,.2,1) forwards}
+    .pulse{animation:pulse 2.4s ease-in-out infinite}
+    .scan{animation:scan 5s linear infinite}
+    @keyframes enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    @keyframes scan{from{transform:translateY(0)}to{transform:translateY(356px)}}
+    @media(prefers-reduced-motion:reduce){.enter,.pulse,.scan{animation:none;opacity:1}}
+  </style>
+</defs>
+<rect x="1" y="1" width="898" height="354" rx="15" fill="#07110d" stroke="#1c4a30" stroke-width="2"/>
+<rect x="2" y="2" width="896" height="352" rx="14" fill="url(#grid)"/>
+<rect x="2" y="2" width="896" height="3" rx="2" fill="url(#edge)"/>
+<circle cx="28" cy="27" r="5" fill="#ff6b6b"/><circle cx="47" cy="27" r="5" fill="#ffd166"/><circle cx="66" cy="27" r="5" fill="#42f58d"/>
+<text x="88" y="32" class="label">THORSEN // PUBLIC PROFILE</text><text x="870" y="32" text-anchor="end" class="label pulse">● ONLINE</text>
+<text x="30" y="68" class="title">PROJECTS.SH // PUBLIC REPOSITORIES</text>
+<rect class="scan" x="4" y="343" width="892" height="1" fill="#42f58d" opacity=".13"/>
+<text x="48" y="101" class="label">PUBLIC PROJECTS // MOST STARRED, THEN MOST RECENT</text><g class="enter" style="animation-delay:0ms"><rect x="42" y="112" width="816" height="57" rx="9" fill="#0b1711" stroke="#1c4a30"/><circle cx="61" cy="130" r="4" fill="#42f58d" class="pulse"/><text x="76" y="133" class="value accent">thorsenbuilds</text><text x="834" y="133" text-anchor="end" class="label">Open source  ·  ★ 0</text><text x="76" y="153" class="label">No description yet</text></g><g class="enter" style="animation-delay:120ms"><rect x="42" y="179" width="816" height="57" rx="9" fill="#0b1711" stroke="#1c4a30"/><circle cx="61" cy="197" r="4" fill="#42f58d" class="pulse"/><text x="76" y="200" class="value accent">missions-demo</text><text x="834" y="200" text-anchor="end" class="label">Python  ·  ★ 0</text><text x="76" y="220" class="label">Personal Python demos with the Claude API: sample DM scoring, lead classification and document</text></g><g class="enter" style="animation-delay:240ms"><rect x="42" y="246" width="816" height="57" rx="9" fill="#0b1711" stroke="#1c4a30"/><circle cx="61" cy="264" r="4" fill="#42f58d" class="pulse"/><text x="76" y="267" class="value accent">harmonix</text><text x="834" y="267" text-anchor="end" class="label">Python  ·  ★ 0</text><text x="76" y="287" class="label">Reordonnancement harmonique de playlist Spotify : tonalite Camelot, BPM et energie, chemin ham</text></g>
+</svg>
