@@ -8,7 +8,7 @@
 
 <h2>VISUAL.MAP // CONTRIBUTION.SIGNAL</h2>
 
-<p align="center"><img src="./assets/profile-cards/heatmap.svg" width="100%" alt="Animated GitHub contribution calendar for the last year" /></p>
+<p align="center"><img src="./assets/profile-cards/heatmap.svg" width="100%" alt="Animated GitHub contribution calendar for the current year" /></p>
 
 <h2>Why I build in public</h2>
 
@@ -28,7 +28,7 @@
 
 <h2>Contribution activity</h2>
 
-<p>The cards refresh automatically from GitHub data. Private repository names and contents are never queried or displayed.</p>
+<p>Cards refresh weekly from public GitHub data. Repository cards include public repositories only. The contribution map uses the anonymous public calendar GitHub serves; private repository names and contents are never queried or displayed.</p>
 
 <hr />
 
