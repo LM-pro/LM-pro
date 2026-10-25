@@ -254,6 +254,18 @@ def main() -> None:
     for filename, svg in generated.items():
         (OUT / filename).write_text(svg, encoding="utf-8")
         print(f"generated {OUT / filename}")
+    readme = Path("README.md")
+    cache_version = os.environ.get("PROFILE_CARDS_CACHE_BUST") or datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+    if readme.exists():
+        content = readme.read_text(encoding="utf-8")
+        content, updated = re.subn(
+            r'(\./assets/profile-cards/[a-z0-9-]+\.svg)(?:\?v=[^"\s]*)?',
+            rf'\1?v={cache_version}', content,
+        )
+        if updated != len(generated):
+            raise RuntimeError(f"Expected {len(generated)} profile card image references, updated {updated}")
+        readme.write_text(content, encoding="utf-8")
+        print(f"Updated README image cache keys ({updated} cards).")
     print(f"Rendered {len(generated)} self-contained SVGs from {len(repos)} public repositories.")
 
 
