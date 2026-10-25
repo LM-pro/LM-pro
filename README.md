@@ -9,8 +9,10 @@
 <td width="38%" align="center" valign="middle"><img src="https://avatars.githubusercontent.com/u/281848951?v=4" width="250" alt="Thorsen’s profile portrait: a pale masked figure under a hood, lit by green glow" /></td>
 <td width="62%" valign="middle">
 <p><code>VISUAL.MAP // IDENTITY.SCAN</code></p>
-<p><strong>Thorsen</strong> · <code>@thorsenbuilds</code></p>
-<p><code>ROLE: Python builder<br />FOCUS: applied AI<br />SIGNAL: music discovery<br />STATUS: building · learning · shipping</code></p>
+<p><strong>Thorsen</strong> · <code>@thorsenbuilds</code></p><p><code>ROLE</code> · Python builder</p>
+<p><code>FOCUS</code> · applied AI</p>
+<p><code>SIGNAL</code> · music discovery</p>
+<p><code>STATUS</code> · building · learning · shipping</p>
 </td>
 </tr>
 </table>
