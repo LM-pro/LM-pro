@@ -2,7 +2,7 @@
 
 <p><code>thorsenbuilds@github ~ $ ./maintainer.sh</code></p>
 <p><strong>Thorsen</strong> · <code>@thorsenbuilds</code></p>
-<p><code>ROLE: Python builder<br />FOCUS: applied AI<br />SIGNAL: music discovery<br />STATUS: building · learning · shipping</code></p>
+<p><code>ROLE: Python builder</code><br /><code>FOCUS: applied AI</code><br /><code>SIGNAL: music discovery</code><br /><code>STATUS: building · learning · shipping</code></p>
 
 </div>
 
