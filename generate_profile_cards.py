@@ -22,7 +22,7 @@ def github_data() -> dict:
       name login bio location websiteUrl followers { totalCount }
       repositories(first:100, ownerAffiliations:OWNER, privacy:PUBLIC, orderBy:{field:PUSHED_AT,direction:DESC}) {
         totalCount nodes { name url description stargazerCount forkCount pushedAt isFork isPrivate primaryLanguage { name color }
-          languages(first:10, orderBy:SIZE) { totalSize edges { size node { name color } } } }
+          languages(first:10, orderBy:{field:SIZE,direction:DESC}) { totalSize edges { size node { name color } } } }
       }
     } }
     """
