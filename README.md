@@ -2,12 +2,37 @@
 
 <p><code>thorsenbuilds@github ~ $ ./maintainer.sh</code></p>
 
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://www.gitskins.com/api/section/system-scan?username=thorsenbuilds&theme=neon&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F281848951%3Fu%3D89a56ad42f4b498274e2eff3f17b1f0201e3dec1%26v%3D4&style=terminal&v=oss-system-scan-1&mode=light" />
-  <img src="https://www.gitskins.com/api/section/system-scan?username=thorsenbuilds&theme=neon&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F281848951%3Fu%3D89a56ad42f4b498274e2eff3f17b1f0201e3dec1%26v%3D4&style=terminal&v=oss-system-scan-1&mode=dark" width="860" alt="Thorsen animated maintainer system scan" />
-</picture>
-</p>
+<table width="100%" border="1">
+<tr>
+<td width="58%" valign="top">
+<p><code>VISUAL.MAP // HOODED.SCAN</code></p>
+<pre><code>                 .-^^^^^^^^^^^-.
+             .-''  .-"""""-.  ''-.
+           .'     /  .-""-.       '.
+          /      /  /                       /      |  | .----. |  |              ;       |  ||  o  o||  |       ;
+        |       |  || .-..-||  |       |
+        |       |  |/ ::::: |  |       |
+        |       |  / :::::::   |       |
+        |       | |  :::::::  | |       |
+        |       | |  :::::::  | |       |
+        |        |  :::::::  |/        |
+        |         | .::::::::.|          |
+        ;       .-'  '::::::'  '-.       ;
+             .' .-._  '--'  _.-. '.    /
+          '. /  /    '------'       .'
+            /__/                  __           /____                /____          /                    /               /________            /________</code></pre>
+</td>
+<td width="42%" valign="middle">
+<p><code>SYSTEM.INFO</code></p>
+<p><code>Subject</code> · Thorsen</p>
+<p><code>Handle</code> · @thorsenbuilds</p>
+<p><code>Role</code> · Python builder</p>
+<p><code>Focus</code> · Applied AI</p>
+<p><code>Status</code> · Building | Learning | Shipping</p>
+<p><code>Languages</code> · Python</p>
+</td>
+</tr>
+</table>
 </div>
 
 <h2>Why I build in public</h2>
