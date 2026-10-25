@@ -1,3 +1,49 @@
+name: Refresh animated profile cards
+
+on:
+  push:
+    branches:
+      - main
+      - codex/profile-cards-draft
+    paths:
+      - README.md
+      - generate_profile_cards.py
+      - .github/workflows/profile-cards.yml
+  schedule:
+    - cron: '23 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Branch to refresh
+        required: false
+        default: codex/profile-cards-draft
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the selected profile branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.target_ref || github.ref }}
+      - name: Generate self-hosted animated cards
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: thorsenbuilds
+          PROFILE_CARDS_DIR: assets/profile-cards
+        run: python3 generate_profile_cards.py
+      - name: Commit changed cards
+        run: |
+          if [[ -n "$(git status --porcelain -- assets/profile-cards)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add assets/profile-cards/
+            git commit -m "chore(profile): refresh animated cards [skip ci]"
+            git push
+          fi
 name: Refresh profile cards
 
 on:
