@@ -10,7 +10,7 @@ from urllib.parse import quote
 LOGIN = os.environ.get("GITHUB_USERNAME", "thorsenbuilds")
 TOKEN = os.environ["GITHUB_TOKEN"]
 OUT = Path(os.environ.get("PROFILE_CARDS_DIR", "assets/profile-cards"))
-GREEN, LIME, MINT, BLUE = "#54f34b", "#b7ff63", "#b4ffd3", "#6468ff"
+GREEN, LIME, MINT, BLUE = "#54f34b", "#b7ff63", "#b4ffd3", "#54f34b"
 BG, PANEL, LINE, MUTED, TEXT = "#050907", "#080d0b", "#244b2b", "#78a77d", "#d8ffe0"
 
 def esc(value: object) -> str:
@@ -144,18 +144,20 @@ def profile_card(user,repos,calendar):
     return shell(width,height,"Green terminal profile scan with animated ASCII hooded portrait","".join(body),inset=0)
 
 def render_toolbox(repos):
-    width,height=860,190; counts={}
+    width,height=860,150; counts={}
     for repo in repos:
         for edge in (repo.get("languages") or {}).get("edges",[]):
             lang=(edge.get("node") or {}).get("name")
             if lang: counts[lang]=counts.get(lang,0)+int(edge.get("size",0))
     ranked=sorted(counts.items(),key=lambda item:(-item[1],item[0]))[:5]; total=max(sum(counts.values()),1)
-    body=[chrome(width,"thorsenbuilds@github:~$ ls skills/",25),'<text x="52" y="73" class="bright" font-size="13" font-weight="700">thorsenbuilds@github:~$</text><text x="274" y="73" class="value">ls skills/</text><path d="M52 88H808" stroke="#1b3221"/>']
+    body=[chrome(width,"thorsenbuilds@github:~$ ls skills/",24),
+      '<text x="52" y="66" class="bright" font-size="13" font-weight="700">thorsenbuilds@github:~$</text><text x="274" y="66" class="value">ls skills/</text><path d="M52 78H808" stroke="#1b3221"/>']
     for i,(lang,size) in enumerate(ranked):
-        x=52+i*151; pct=round(size*100/total); body.append(f'<g class="rise" style="animation-delay:{i*110}ms"><rect x="{x}" y="102" width="137" height="56" rx="9" fill="url(#glass)" stroke="#356e3a"/><text x="{x+11}" y="125" class="bright" font-size="13" font-weight="700">{esc(lang[:14])}</text><text x="{x+11}" y="145" class="small">{pct}%  ·  {len(repos)} repos</text><rect x="{x+11}" y="151" width="115" height="2" rx="1" fill="#15331c"/><rect x="{x+11}" y="151" width="{max(2,115*pct/100):.1f}" height="2" rx="1" fill="{GREEN}"/></g>')
-    if not ranked: body.append('<text x="52" y="128" class="value">No public language data</text>')
-    body.append('<text x="808" y="177" text-anchor="end" class="small">OPEN-SOURCE TOOLBOX  /  PUBLIC REPOSITORIES</text>')
-    return shell(width,height,"Animated terminal-style public language toolbox","".join(body),inset=14)
+        x=52+i*151; pct=round(size*100/total)
+        body.append(f'<g class="rise" style="animation-delay:{i*110}ms"><rect x="{x}" y="91" width="137" height="34" rx="8" fill="url(#glass)" stroke="#356e3a"/><text x="{x+10}" y="112" class="bright" font-size="12" font-weight="700">{esc(lang[:13])}</text><text x="{x+126}" y="112" class="small" text-anchor="end">{pct}%</text><rect x="{x+10}" y="120" width="117" height="2" rx="1" fill="#15331c"/><rect x="{x+10}" y="120" width="{max(2,117*pct/100):.1f}" height="2" rx="1" fill="{GREEN}"/></g>')
+    if not ranked: body.append('<text x="52" y="108" class="value">No public language data</text>')
+    body.append('<text x="808" y="140" text-anchor="end" class="small">OPEN-SOURCE TOOLBOX  /  PUBLIC REPOSITORIES</text>')
+    return shell(width,height,"Animated terminal-style public language toolbox","".join(body),inset=12)
 
 def candidate_repos(repos,login):
     filtered=[r for r in repos if r.get("name","").lower()!=login.lower()]
