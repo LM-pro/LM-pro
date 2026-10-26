@@ -84,23 +84,43 @@ def shell(width,height,aria,content,inset=26):
 def chrome(width,command,y=29):
     return f'<circle cx="34" cy="{y}" r="5" fill="#ff6969"/><circle cx="52" cy="{y}" r="5" fill="#ffc857"/><circle cx="70" cy="{y}" r="5" fill="{GREEN}"/><text x="{width/2:.0f}" y="{y+4}" text-anchor="middle" class="small">{esc(command)}</text>'
 
-def ascii_portrait(rows=27,cols=57):
+def ascii_portrait(rows=31,cols=57):
+    """Draw a hooded, masked figure with lightning accents using text only."""
     shades=" .,:;irsXA253hMHGS#9B&@"; lines=[]
     for y in range(rows):
-        line=[]
+        ny=y/(rows-1); line=[]
         for x in range(cols):
-            nx,ny=(x-(cols-1)/2)/(cols*.5),y/(rows-1)
-            if ny<.60: hood=(nx/(.28+ny*.18))**2+((ny-.30)/.39)**2<1
-            else: hood=abs(nx)<.28+(ny-.60)*.95 and ny<.98
-            face=(nx/.27)**2+((ny-.39)/.29)**2<1
-            if not hood: ch=" "
+            nx=(x-(cols-1)/2)/(cols*.5); ax=abs(nx)
+            # Dome of the hood tapers around the face and opens into the shoulders.
+            if ny<.58:
+                hw=.30+.28*ny
+                hood=(nx/hw)**2+((ny-.30)/.37)**2<1.0
             else:
-                texture=((x*13+y*7+x*y)%13)/13
-                if face and .30<ny<.38 and .07<abs(nx)<.22: ch="#" if abs(nx)>.12 else "%"
-                elif face and .39<=ny<.58: ch=" .:-=+*#%"[(int(abs(nx)*38)+y*3)%9]
-                elif face: ch=" .,:;irsXA"[min(9,int((texture+.2)*8))]
-                else:
-                    edge=abs(nx)/(.29+ny*.8); shade=max(0,min(len(shades)-1,int((.94-edge*.50+texture*.20)*(len(shades)-1)))); ch=shades[shade]
+                hood=ax<.31+(ny-.58)*1.38 and ny<.98
+            face=(ax<(.235-.035*max(0,ny-.42)) and .16<ny<.62)
+            hood_edge=hood and abs(ax-(.29+.30*ny))<.035
+            fabric_fold=hood and (abs(nx-(.12+ny*.20))<.025 or abs(nx+(.12+ny*.20))<.025) and ny>.48
+            # Electrical arcs frame the hood, echoing the green lightning in the avatar.
+            arc=((.64<ny<.72 and .53<ax<.76 and int((x+y*3)%7) in (0,1)) or
+                 (.24<ny<.34 and .46<ax<.60 and int((x*2+y)%9) in (0,1)))
+            if arc:
+                ch="~" if (x+y)%2 else "*"
+            elif not hood:
+                ch=" "
+            elif face and .31<ny<.37 and .075<ax<.19:
+                ch="@" if ax<.13 else "#"  # bright eyes beneath the hood
+            elif face and .39<ny<.49:
+                ch="-=+*#%"[min(6,int((ny-.39)*65))] if ax<.17 else ":"
+            elif face and .49<=ny<.59:
+                ch="=+*#%"[min(4,int((ny-.49)*42))] if ax<.18 else "."
+            elif hood_edge:
+                ch="#*+"[(x+y)%3]
+            elif fabric_fold:
+                ch="/\\"[x%2]
+            else:
+                edge=ax/(.30+.30*ny); texture=((x*7+y*11+x*y)%13)/13
+                shade=max(0,min(len(shades)-1,int((.96-edge*.43+texture*.18)*(len(shades)-1))))
+                ch=shades[shade]
             line.append(ch)
         lines.append("".join(line).rstrip())
     return lines
